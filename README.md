@@ -4,3 +4,4 @@ Natural Selection is a rogue-lite 2d video game built around the concept of enem
 Contributors:
 - John Burns
 - Zoe Amerman
+- Donovan Zhang
