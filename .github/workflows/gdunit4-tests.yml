@@ -50,10 +50,10 @@ jobs:
           timeout: 15
 
           # report-name: test_report.xml
-          Keep the test report available as a workflow artifact.
+          # Keep the test report available as a workflow artifact.
           upload-report: false
 
-          Don't publish a separate PR test report.
+          # Don't publish a separate PR test report.
           publish-report: false
 
       - name: Upload GdUnit4 HTML report
