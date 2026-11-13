@@ -57,9 +57,9 @@ jobs:
           publish-report: false
 
       - name: Upload GdUnit4 HTML report
-          if: always()
-          uses: actions/upload-artifact@v7
-          with:
-            name: gdunit4-html-report
-            path: reports/
-            archive: false
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gdunit4-html-report
+          path: reports/
+          archive: false
