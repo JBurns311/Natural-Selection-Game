@@ -37,7 +37,7 @@ jobs:
 
       # Install Godot and run the GdUnit4 test suite.
       - name: Run GdUnit4 tests
-        uses: godot-gdunit-labs/gdUnit4-action@v1
+        uses: godot-gdunit-labs/gdUnit4-action@v1.0.2
         with:
           godot-version: '4.7.2'
 
@@ -49,9 +49,17 @@ jobs:
 
           timeout: 15
 
-          # Keep the test report available as a workflow artifact.
-          upload-report: true
+          # report-name: test_report.xml
+          Keep the test report available as a workflow artifact.
+          upload-report: false
 
-          # Don't publish a separate PR test report.
+          Don't publish a separate PR test report.
           publish-report: false
 
+      - name: Upload GdUnit4 HTML report
+          if: always()
+          uses: actions/upload-artifact@v7
+          with:
+            name: gdunit4-html-report
+            path: reports/
+            archive: false
