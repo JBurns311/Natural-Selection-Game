@@ -1,7 +1,6 @@
 name: GdUnit4 CI
+run-name: ${{ github.head_ref || github.ref_name }}-GdUnit4-CI
 
-# Run CI whenever commits are pushed to any branch.
-# Also run CI whenever a PR targeting main is opened or updated.
 on:
   push:
 
@@ -9,57 +8,36 @@ on:
     branches:
       - main
 
-  # Allow manually triggering the workflow.
   workflow_dispatch:
 
-# Cancel older runs when a newer commit is pushed
-# to the same branch or pull request.
+
 concurrency:
   group: gdunit4-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-# Give the workflow only the permissions it needs.
-permissions:
-  contents: read
 
 jobs:
-  gdunit4:
-    name: GdUnit4 tests
+  unit-test:
+    name: "CI Unit Test"
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10 # The overall timeout
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+      pull-requests: write
+      statuses: write
 
     steps:
-      # Download the repository onto the GitHub runner.
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # checkout your repository
+      - uses: actions/checkout@v4
         with:
           lfs: true
-
-      # Install Godot and run the GdUnit4 test suite.
-      - name: Run GdUnit4 tests
-        uses: godot-gdunit-labs/gdUnit4-action@v1.0.2
+      # run tests by using the gdUnit4-action with Godot version 4.2.1 and the latest GdUnit4 release 
+      - uses: godot-gdunit-labs/gdUnit4-action@v1.4.2
         with:
           godot-version: '4.7.2'
-
-          # Use the GdUnit4 plugin already committed to the repository.
-          version: 'installed'
-
-          # Change this to your actual test directory.
-          paths: 'res://tests'
-
-          timeout: 15
-
-          # report-name: test_report.xml
-          # Keep the test report available as a workflow artifact.
-          upload-report: false
-
-          # Don't publish a separate PR test report.
-          publish-report: false
-
-      - name: Upload GdUnit4 HTML report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: gdunit4-html-report
-          path: reports/
-          archive: false
+          paths: |
+            res://tests/
+          timeout: 5
+          report-name: test_report.xml   
