@@ -1,0 +1,57 @@
+name: GdUnit4 CI
+
+# Run CI whenever commits are pushed to any branch.
+# Also run CI whenever a PR targeting main is opened or updated.
+on:
+  push:
+
+  pull_request:
+    branches:
+      - main
+
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+# Cancel older runs when a newer commit is pushed
+# to the same branch or pull request.
+concurrency:
+  group: gdunit4-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Give the workflow only the permissions it needs.
+permissions:
+  contents: read
+
+jobs:
+  gdunit4:
+    name: GdUnit4 tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      # Download the repository onto the GitHub runner.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Install Godot and run the GdUnit4 test suite.
+      - name: Run GdUnit4 tests
+        uses: godot-gdunit-labs/gdUnit4-action@v1
+        with:
+          godot-version: '4.7.2'
+
+          # Use the GdUnit4 plugin already committed to the repository.
+          version: 'installed'
+
+          # Change this to your actual test directory.
+          paths: 'res://tests'
+
+          timeout: 15
+
+          # Keep the test report available as a workflow artifact.
+          upload-report: true
+
+          # Don't publish a separate PR test report.
+          publish-report: false
+
