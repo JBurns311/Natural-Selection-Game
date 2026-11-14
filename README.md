@@ -7,5 +7,3 @@ Contributors:
 * John Burns
 * Zoe Amerman
 * Donovan Zhang
-
-demo pull request readme update
