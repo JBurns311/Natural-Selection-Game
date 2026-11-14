@@ -5,6 +5,7 @@
 # IDE files
 .vscode/
 .idea/
+server.pipe
 
 # OS-generated files
 .DS_Store
