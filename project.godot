@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Natural-Selection"
+config/name="Natural-Selection-Game"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
