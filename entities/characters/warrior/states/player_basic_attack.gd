@@ -11,15 +11,16 @@ func init(state_actor: CharacterBody2D) -> void:
 	player = parent as Player
 	
 func enter() -> void:
+	var input_direction = Input.get_vector("left", "right", "up", "down")
 	combo_flag = false
 	attack_direction = "side"
-	if player.input_direction.x > 0:
+	if input_direction.x > 0:
 		player.sprite.flip_h = false
-	elif player.input_direction.x < 0:
+	elif input_direction.x < 0:
 		player.sprite.flip_h = true
-	elif player.input_direction.y > 0:
+	elif input_direction.y > 0:
 		attack_direction = "down"
-	elif player.input_direction.y < 0:
+	elif input_direction.y < 0:
 		attack_direction = "up"
 	
 	player.sprite.play(attack_direction + "_attack_1")
@@ -35,7 +36,7 @@ func physics_update(_delta: float) -> void:
 	if combo_timer.is_stopped():
 		if combo_flag:
 			state_transition.emit(player.combo_attack_state)
-		elif player.input_direction == Vector2.ZERO:
+		elif Input.get_vector("left", "right", "up", "down") == Vector2.ZERO:
 			state_transition.emit(player.idle_state)
 		else:
 			state_transition.emit(player.walk_state)

@@ -16,5 +16,5 @@ func physics_update(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("primary_action"):
 		state_transition.emit(player.basic_attack_state)
-	elif player.input_direction != Vector2.ZERO:
+	elif Input.get_vector("left", "right", "up", "down") != Vector2.ZERO:
 		state_transition.emit(player.walk_state)

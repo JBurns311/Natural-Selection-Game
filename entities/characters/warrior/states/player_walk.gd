@@ -9,10 +9,11 @@ func init(state_actor: CharacterBody2D) -> void:
 func enter() -> void:
 	player.sprite.play("walk")
 
-func physics_update(_delta: float) -> void:
-	player.move(_delta, Input.get_vector("left", "right", "up", "down"))
+func physics_update(delta: float) -> void:
+	var input_direction = Input.get_vector("left", "right", "up", "down")
+	player.move(delta, input_direction)
 	
 	if Input.is_action_just_pressed("primary_action"):
 		state_transition.emit(player.basic_attack_state)
-	elif player.input_direction == Vector2.ZERO:
+	elif input_direction == Vector2.ZERO:
 		state_transition.emit(player.idle_state)

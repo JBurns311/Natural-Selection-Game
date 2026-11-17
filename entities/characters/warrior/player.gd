@@ -1,8 +1,8 @@
 class_name Player extends CharacterBody2D
 
-@export var speed = 300.0
+@export var speed: float = 18000.0
 
-var input_direction: Vector2 = Vector2.ZERO
+# var input_direction: Vector2 = Vector2.ZERO
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
@@ -17,17 +17,20 @@ var input_direction: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	state_machine.init(self)
 
-func _physics_process(delta: float) -> void:
-	input_direction = Input.get_vector("left", "right", "up", "down")
+func _physics_process(_delta: float) -> void:
+	pass
+	# input_direction = Input.get_vector("left", "right", "up", "down")
 	
-func move(delta: float, input_direction: Vector2) -> void:
-	var input_velocity = input_direction * speed
+func move(delta: float, direction: Vector2) -> void:
+	var delta_speed = speed * delta
+	var delta_velocity = direction.normalized() * delta_speed
 	
-	if input_direction.x < 0:
+	if direction.x < 0:
 		sprite.flip_h = true
-	elif input_direction.x > 0:
+	elif direction.x > 0:
 		sprite.flip_h = false
 	
-	velocity.x = move_toward(velocity.x, input_velocity.x, speed)
-	velocity.y = move_toward(velocity.y, input_velocity.y, speed)
+	velocity.x = move_toward(velocity.x, delta_velocity.x, delta_speed)
+	velocity.y = move_toward(velocity.y, delta_velocity.y , delta_speed)
+
 	move_and_slide()

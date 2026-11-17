@@ -26,6 +26,8 @@ enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
 [gdunit4]
 
 ui/toolbar/run_overall=true
+settings/test/test_lookup_folder="tests"
+settings/test/test_discovery=true
 
 [input]
 
