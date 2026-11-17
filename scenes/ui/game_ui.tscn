@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://d0ypjacvod0lb"]
+
+[ext_resource type="Script" uid="uid://dbmegqf3g72pb" path="res://scenes/ui/game_ui.gd" id="1_game_ui"]
+
+[node name="GameUI" type="Control" unique_id=2106991832]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_game_ui")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1217790683]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.09, 0.13, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=489662992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="VBoxContainer" parent="CenterContainer" unique_id=1217623830]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CenterContainer/Menu" unique_id=275494659]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Natural Selection"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="CenterContainer/Menu" unique_id=572779982]
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Start Game"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/Menu" unique_id=2091553215]
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/Menu" unique_id=381652211]
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Quit"
