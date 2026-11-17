@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bfs5vgyllxu7m"]
+
+[ext_resource type="Texture2D" uid="uid://cv3nqnksdjfnk" path="res://entities/enemies/assets/slime_purple.png" id="1_owq46"]
+[ext_resource type="Script" path="res://entities/enemies/enemy.gd" id="2_enemy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqcwe"]
+atlas = ExtResource("1_owq46")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lf1o"]
+atlas = ExtResource("1_owq46")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msovg"]
+atlas = ExtResource("1_owq46")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twyc1"]
+atlas = ExtResource("1_owq46")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_msovg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqcwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lf1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msovg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twyc1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="enemy" type="Node2D" unique_id=2047734514]
+script = ExtResource("2_enemy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=181403813]
+sprite_frames = SubResource("SpriteFrames_msovg")
+autoplay = "default"
