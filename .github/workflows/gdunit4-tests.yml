@@ -1,4 +1,4 @@
-name: GdUnit4 CI
+name: GdUnit4 tests
 run-name: ${{ github.head_ref || github.ref_name }}-GdUnit4-CI
 
 on:
