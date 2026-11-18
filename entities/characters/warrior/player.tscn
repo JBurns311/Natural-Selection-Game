@@ -3,10 +3,25 @@
 [ext_resource type="Script" uid="uid://bbfpsru1ufkjq" path="res://entities/characters/warrior/player.gd" id="1_gw5cb"]
 [ext_resource type="Texture2D" uid="uid://c2ui5hdpp5qv3" path="res://entities/characters/warrior/warrior_red.png" id="2_5ryr2"]
 [ext_resource type="Script" uid="uid://bt8mu3men4gjb" path="res://scripts/models/state_machine/state_machine.gd" id="3_gw5cb"]
+[ext_resource type="PackedScene" uid="uid://cneftng1yklde" path="res://systems/combat/health_component.tscn" id="4_gsbtk"]
 [ext_resource type="Script" uid="uid://coxq65idi4t1w" path="res://entities/characters/warrior/states/player_idle.gd" id="4_gw5cb"]
 [ext_resource type="Script" uid="uid://3v7eejdb30l1" path="res://entities/characters/warrior/states/player_walk.gd" id="5_5ryr2"]
 [ext_resource type="Script" uid="uid://cru6au1rnuidk" path="res://entities/characters/warrior/states/player_basic_attack.gd" id="6_gsbtk"]
 [ext_resource type="Script" uid="uid://dm4kc0dcmwbgp" path="res://entities/characters/warrior/states/player_combo_attack.gd" id="7_udmcj"]
+[ext_resource type="PackedScene" uid="uid://bx7ep0nk7uifq" path="res://systems/combat/attack.tscn" id="8_5ryr2"]
+[ext_resource type="Script" uid="uid://hpq0utxwkq0o" path="res://entities/characters/warrior/states/player_damage.gd" id="10_udmcj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udmcj"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(960, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y8u7"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(768, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mihr3"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(576, 192, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("2_5ryr2")
@@ -200,6 +215,20 @@ region = Rect2(960, 192, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_udmcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4y8u7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mihr3")
+}],
+"loop": 0,
+"name": &"damage",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_g2els")
 }, {
 "duration": 1.0,
@@ -383,16 +412,43 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jrtc8"]
 size = Vector2(30.5, 51)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vyept"]
+size = Vector2(59, 106)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_af1fn"]
+size = Vector2(21.123493, 42.59999)
+
 [node name="Player" type="CharacterBody2D" unique_id=58085995]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_gw5cb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=320577369]
 sprite_frames = SubResource("SpriteFrames_d6yxf")
-animation = &"down_attack_1"
+animation = &"damage"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1336090926]
 position = Vector2(-0.75, 7)
 shape = SubResource("RectangleShape2D_jrtc8")
+
+[node name="SwordAttack" parent="." unique_id=628350089 instance=ExtResource("8_5ryr2")]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="SwordAttack" index="0" unique_id=1121858233]
+position = Vector2(59.5, 0)
+shape = SubResource("RectangleShape2D_vyept")
+
+[node name="HealthComponent" parent="." unique_id=2046431478 instance=ExtResource("4_gsbtk")]
+collision_layer = 2
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="HealthComponent" index="0" unique_id=698536266]
+position = Vector2(-1.0113096, 6.581807)
+scale = Vector2(1.4212906, 1.1933427)
+shape = SubResource("RectangleShape2D_af1fn")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1003964418 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_gw5cb")
@@ -418,3 +474,11 @@ one_shot = true
 [node name="PlayerComboAttack" type="Node" parent="StateMachine" unique_id=1198399189]
 script = ExtResource("7_udmcj")
 metadata/_custom_type_script = "uid://dm4kc0dcmwbgp"
+
+[node name="PlayerDamage" type="Node" parent="StateMachine" unique_id=1493539481]
+script = ExtResource("10_udmcj")
+
+[connection signal="area_entered" from="HealthComponent" to="." method="_on_health_component_area_entered"]
+
+[editable path="SwordAttack"]
+[editable path="HealthComponent"]

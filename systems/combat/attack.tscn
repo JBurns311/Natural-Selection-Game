@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bx7ep0nk7uifq"]
+
+[ext_resource type="Script" uid="uid://3slohma4ilb3" path="res://systems/combat/attack.gd" id="1_v3awr"]
+
+[node name="Attack" type="Area2D" unique_id=628350089]
+script = ExtResource("1_v3awr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1121858233]

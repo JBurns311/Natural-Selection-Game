@@ -26,9 +26,9 @@ func enter() -> void:
 	player.sprite.play(attack_direction + "_attack_1")
 	combo_timer.start()
 
-func physics_update(_delta: float) -> void:
+func physics_update(delta: float) -> void:
 	# if player velocity isn't zero in state move towards that
-	player.move(_delta, Vector2.ZERO)
+	player.move(delta, Vector2.ZERO)
 	
 	if Input.is_action_just_pressed("primary_action"):
 		combo_flag = true
@@ -43,3 +43,4 @@ func physics_update(_delta: float) -> void:
 
 func exit() -> void:
 	combo_flag = false
+	combo_timer.stop()
