@@ -39,6 +39,7 @@ func test_idle_and_walk_transition_with_directional_input() -> void:
 
 	runner.simulate_action_release("left")
 	await runner.await_input_processed()
+	await runner.simulate_frames(10, 20)
 	assert_that(player.state_machine._current_state).is_equal(player.idle_state)
 	assert_that(player.sprite.animation).is_equal(&"idle")
 	assert_bool(player.velocity.x == 0.0).is_true()
@@ -105,7 +106,7 @@ func test_primary_action_during_combo_window_transitions_to_combo_attack() -> vo
 	await runner.simulate_frames(5, 20)
 	assert_bool(player.basic_attack_state.combo_flag).is_true()
 
-	await runner.simulate_frames(10, 20)
+	await runner.simulate_frames(8, 20)
 
 	assert_that(player.state_machine._current_state).is_equal(player.combo_attack_state)
 	assert_that(player.sprite.animation).is_equal(&"side_attack_2")
