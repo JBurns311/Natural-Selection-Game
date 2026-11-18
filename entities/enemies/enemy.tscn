@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://bfs5vgyllxu7m"]
+
+[ext_resource type="Texture2D" uid="uid://cv3nqnksdjfnk" path="res://entities/enemies/assets/slime_purple.png" id="1_owq46"]
+[ext_resource type="Script" uid="uid://x8gv16s4ixqc" path="res://entities/enemies/enemy.gd" id="2_enemy"]
+[ext_resource type="Script" path="res://scripts/models/state_machine/state_machine.gd" id="3_machine"]
+[ext_resource type="Script" path="res://entities/enemies/states/enemy_idle.gd" id="4_idle"]
+[ext_resource type="Script" path="res://entities/enemies/states/enemy_walk.gd" id="5_walk"]
+[ext_resource type="Script" path="res://entities/enemies/states/enemy_melee_attack.gd" id="6_melee"]
+[ext_resource type="Script" path="res://entities/enemies/states/enemy_range_attack.gd" id="7_range"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqcwe"]
+atlas = ExtResource("1_owq46")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lf1o"]
+atlas = ExtResource("1_owq46")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msovg"]
+atlas = ExtResource("1_owq46")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twyc1"]
+atlas = ExtResource("1_owq46")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_msovg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqcwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lf1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msovg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twyc1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqcwe"]
+size = Vector2(8, 10)
+
+[node name="enemy" type="CharacterBody2D" unique_id=2047734514]
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("2_enemy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=181403813]
+sprite_frames = SubResource("SpriteFrames_msovg")
+autoplay = "default"
+
+[node name="StrategyLabel" type="Label" parent="."]
+offset_left = -64.0
+offset_top = -24.0
+offset_right = 64.0
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(64, 0)
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+horizontal_alignment = 1
+
+[node name="BodyShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_wqcwe")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1440188507]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=846862957]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_wqcwe")
+
+[node name="ShotTracer" type="Line2D" parent="."]
+visible = false
+width = 1.0
+default_color = Color(1, 0.85, 0.4, 1)
+
+[node name="StateMachine" type="Node" parent="." unique_id=423066140 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_machine")
+initial_state = NodePath("EnemyIdle")
+
+[node name="EnemyIdle" type="Node" parent="StateMachine" unique_id=752397173]
+script = ExtResource("4_idle")
+
+[node name="EnemyWalk" type="Node" parent="StateMachine" unique_id=185799936]
+script = ExtResource("5_walk")
+
+[node name="EnemyMeleeAttack" type="Node" parent="StateMachine" unique_id=1580043257]
+script = ExtResource("6_melee")
+
+[node name="EnemyRangeAttack" type="Node" parent="StateMachine" unique_id=217333592]
+script = ExtResource("7_range")
