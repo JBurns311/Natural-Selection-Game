@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://c5f1qrh0vp6gd"]
+
+[ext_resource type="PackedScene" uid="uid://m8kms1gloiqf" path="res://entities/characters/warrior/player.tscn" id="1_46lwt"]
+[ext_resource type="Script" uid="uid://37qbhdajsxob" path="res://levels/enemy_controller.gd" id="3_gmgay"]
+
+[node name="TestLevel" type="Node2D" unique_id=1753650728]
+
+[node name="Player" parent="." unique_id=58085995 instance=ExtResource("1_46lwt")]
+
+[node name="EnemyController" type="Node" parent="." unique_id=594392412]
+script = ExtResource("3_gmgay")
+player_path = NodePath("../Player")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2059687046]
