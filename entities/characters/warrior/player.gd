@@ -46,11 +46,10 @@ func move(delta: float, direction: Vector2) -> void:
 
 func process_attack(attack: Attack) -> void:
 	if not handle_damage_taken and not handle_death:
-		print("HP: " + str(hp_component.hp))
 		hp_component.hp = max(hp_component.hp - attack.power, 0)
-		print(str(position - attack.position))
-		velocity.x = move_toward(velocity.x, position.x - attack.position.x, attack.knockback_distance)
-		velocity.y = move_toward(velocity.y, position.y - attack.position.y, attack.knockback_distance)
+		var knockback_vel := (position - attack.position).normalized() * attack.knockback_distance
+		velocity.x = move_toward(velocity.x, knockback_vel.x, attack.knockback_distance)
+		velocity.y = move_toward(velocity.y, knockback_vel.y, attack.knockback_distance)
 		if hp_component.hp > 0:
 			handle_damage_taken = true
 		else:
