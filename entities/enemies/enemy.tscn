@@ -80,11 +80,6 @@ collision_mask = 8
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_wqcwe")
 
-[node name="ShotTracer" type="Line2D" parent="." unique_id=1422288887]
-visible = false
-width = 1.0
-default_color = Color(1, 0.85, 0.4, 1)
-
 [node name="StateMachine" type="Node" parent="." unique_id=423066140 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_machine")
 initial_state = NodePath("EnemyIdle")

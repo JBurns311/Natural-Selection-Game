@@ -1,8 +1,7 @@
 class_name EnemyMeleeAttack
 extends State
 
-
-# Stop and request attacks while the target is in melee range. Resume pursuit when it leaves range.
+# Stop and request attacks while the target is in melee range, resume pursuit when it leaves range
 func physics_update(_delta: float) -> void:
 	var enemy := parent as Enemy
 	enemy.velocity = Vector2.ZERO

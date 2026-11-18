@@ -15,20 +15,19 @@ var enemies: Array[Enemy] = []
 
 var nn_array: Array[Neural_net] = []
 
-var generation := 1
-var elapsed := 0.0
+# Current generation number
+var generation = 1
+# Elapsed time in this generation
+var elapsed = 0.0
+# Seconds per trial
+const TRIAL_SECONDS = 15.0
 
-const TRIAL_SECONDS := 15.0
-
+# What the enemies will target. Will be set to the player
 var target: Node2D
 
 func _ready() -> void:
-
-	target = get_node_or_null(player_path) as Node2D if not player_path.is_empty() else null
-	if target == null:
-		push_error("EnemyController: Player Path must point to a Node2D.")
-		set_physics_process(false)
-		return
+	# Set target to player
+	target = get_node(player_path)
 
 	for index in range(enemy_count):
 
@@ -50,7 +49,7 @@ func _ready() -> void:
 
 	_start_generation()
 
-# Reset and space the slimes around the target. Every network gets the same normalized starting distance.
+# Reset and space the slimes around the target
 func _start_generation() -> void:
 	elapsed = 0.0
 	for index in range(enemies.size()):
@@ -61,7 +60,7 @@ func _start_generation() -> void:
 		enemy.strategy = nn_array[index].choose_strategy(225.0 / 400.0)
 
 
-# Advance the trial timer. Enemy hit counters are updated by combat overlaps.
+# Advance the trial timer
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(target) or target.is_queued_for_deletion():
 		for enemy in enemies:
