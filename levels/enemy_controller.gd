@@ -14,22 +14,24 @@ const Neural_net = preload("res://entities/enemies/enemy_neural_net.gd")
 var enemies: Array[Enemy] = []
 
 var nn_array: Array[Neural_net] = []
-var counter_cooldowns: Array[float] = []
 
 var generation := 1
 var elapsed := 0.0
 
 const TRIAL_SECONDS := 15.0
-const COUNTER_RANGE := 65.0
 
 var target: Node2D
 
 func _ready() -> void:
-	
-	target = get_node_or_null(player_path)
-	
+
+	target = get_node_or_null(player_path) as Node2D if not player_path.is_empty() else null
+	if target == null:
+		push_error("EnemyController: Player Path must point to a Node2D.")
+		set_physics_process(false)
+		return
+
 	for index in range(enemy_count):
-		
+
 		# Creating new neural net
 		# (Bias the initial networks toward different strategies so the default population shows them all)
 		var strategy_index := index % Neural_net.OUTPUT_COUNT
@@ -42,17 +44,9 @@ func _ready() -> void:
 		enemy.target = target
 		enemy.scale = Vector2(2.5, 2.5)
 		enemy.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		
-		# There are placeholder connections here for now until combat system is ready
-		
-		#TODO from combat system (connect to melee attack procedure)
-		enemy.attack_requested.connect(enemy.record_hit_scored)
-		#TODO from combat system (connect to ranged attack procedure)
-		enemy.ranged_attack_requested.connect(func(_origin: Vector2, _direction: Vector2) -> void: enemy.record_hit_scored())
-		
+
 		add_child(enemy)
 		enemies.append(enemy)
-		counter_cooldowns.append(0.0)
 
 	_start_generation()
 
@@ -65,10 +59,9 @@ func _start_generation() -> void:
 		var enemy := enemies[index]
 		enemy.reset_trial(spawn)
 		enemy.strategy = nn_array[index].choose_strategy(225.0 / 400.0)
-		counter_cooldowns[index] = 0.0
 
 
-# Advance the trial timer and simulate a separate counterattack cooldown for each slime.
+# Advance the trial timer. Enemy hit counters are updated by combat overlaps.
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(target) or target.is_queued_for_deletion():
 		for enemy in enemies:
@@ -77,16 +70,6 @@ func _physics_process(delta: float) -> void:
 		return
 
 	elapsed += delta
-
-	for index in range(enemies.size()):
-		var enemy := enemies[index]
-
-		#TODO from combat system (create the actual conditions where record_hit_taken() gets called)
-		# (instead of this simulated situation)
-		counter_cooldowns[index] -= delta
-		if counter_cooldowns[index] <= 0.0 and enemy.global_position.distance_to(target.global_position) <= COUNTER_RANGE:
-			enemy.record_hit_taken()
-			counter_cooldowns[index] = 1.0
 
 	if elapsed >= TRIAL_SECONDS:
 		_finish_generation()

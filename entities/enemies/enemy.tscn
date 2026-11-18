@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://conii8aenq781" path="res://entities/enemies/states/enemy_walk.gd" id="5_walk"]
 [ext_resource type="Script" uid="uid://ck250yygvnty" path="res://entities/enemies/states/enemy_melee_attack.gd" id="6_melee"]
 [ext_resource type="Script" uid="uid://26jvnymyxkqg" path="res://entities/enemies/states/enemy_range_attack.gd" id="7_range"]
+[ext_resource type="Script" path="res://entities/enemies/states/enemy_damage.gd" id="8_damage"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wqcwe"]
 atlas = ExtResource("1_owq46")
@@ -72,6 +73,8 @@ position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_wqcwe")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1440188507]
+collision_layer = 0
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=846862957]
 position = Vector2(0, 6)
@@ -97,3 +100,8 @@ script = ExtResource("6_melee")
 
 [node name="EnemyRangeAttack" type="Node" parent="StateMachine" unique_id=217333592]
 script = ExtResource("7_range")
+
+[node name="EnemyDamage" type="Node" parent="StateMachine"]
+script = ExtResource("8_damage")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

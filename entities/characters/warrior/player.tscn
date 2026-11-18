@@ -423,7 +423,6 @@ size = Vector2(21.123493, 42.59999)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_gw5cb")
-speed = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=320577369]
 sprite_frames = SubResource("SpriteFrames_d6yxf")
@@ -446,6 +445,7 @@ shape = SubResource("RectangleShape2D_vyept")
 [node name="HealthComponent" parent="." unique_id=2046431478 instance=ExtResource("4_gsbtk")]
 collision_layer = 2
 collision_mask = 16
+max_hp = 1000
 
 [node name="CollisionShape2D" parent="HealthComponent" index="0" unique_id=698536266]
 position = Vector2(-1.0113096, 6.581807)

@@ -1,6 +1,12 @@
 class_name Enemy
 extends CharacterBody2D
 
+const Attack_scene := preload("res://systems/combat/attack.tscn")
+const max_health = 30
+
+var health = max_health
+var active_attack: Attack
+
 signal attack_requested
 signal ranged_attack_requested(origin: Vector2, direction: Vector2)
 
@@ -28,8 +34,8 @@ const STRATEGY_COLORS := {
 	set(value):
 		strategy = value
 		if is_node_ready():
-			_update_strategy_display()
-			
+			update_strategy_display()
+
 # Movement, cooldown, and range settings used by the enemy states
 @export var speed: float = 120.0
 @export var attack_range: float = 24.0
@@ -42,48 +48,49 @@ const STRATEGY_COLORS := {
 @onready var walk_state: State = $StateMachine/EnemyWalk
 @onready var melee_state: State = $StateMachine/EnemyMeleeAttack
 @onready var ranged_state: State = $StateMachine/EnemyRangeAttack
+@onready var damage_state: State = $StateMachine/EnemyDamage
 @onready var tracer: Line2D = $ShotTracer
 
 var target: Node2D
 var hits_taken: int = 0
 var hits_scored_on_player: int = 0
 var approach_time: float = 0.0
-var _cooldown: float = 0.0
-var _tracer_time: float = 0.0
+var cooldown: float = 0.0
+var tracer_time: float = 0.0
 
 func _ready() -> void:
-	_update_strategy_display()
+	update_strategy_display()
 	state_machine.init(self)
 
 # Update enemy color and label when a strategy is assigned
-func _update_strategy_display() -> void:
+func update_strategy_display() -> void:
 	$AnimatedSprite2D.self_modulate = STRATEGY_COLORS.get(strategy, Color.WHITE)
 	$StrategyLabel.text = STRATEGY_NAMES[strategy] if STRATEGY_COLORS.has(strategy) else "Unknown"
 
-
-# The target can disappear if the level removes it during a trial
 func has_target() -> bool:
 	return is_instance_valid(target) and not target.is_queued_for_deletion()
-
 
 # Both ranged strategies share a state and differ in how they move
 func uses_range() -> bool:
 	return strategy == Strategy.STATIONARY_RANGE or strategy == Strategy.CIRCLE_RANGE
 
-
 # Reuse the slime at a new spawn position with fresh timers and hit counters
+# Input: new spawn location
 func reset_trial(spawn_position: Vector2) -> void:
+	clear_active_attack()
+	health = max_health
+	show()
+	state_machine.set_physics_process(true)
+	if state_machine._current_state != idle_state:
+		state_machine.change_state(idle_state)
 	global_position = spawn_position
 	velocity = Vector2.ZERO
 	hits_taken = 0
 	hits_scored_on_player = 0
 	approach_time = 0.0
-	_cooldown = 0.0
-	_tracer_time = 0.0
+	cooldown = 0.0
+	tracer_time = 0.0
 	tracer.hide()
-
-func record_hit_taken() -> void:
-	hits_taken += 1
 
 func record_hit_scored() -> void:
 	hits_scored_on_player += 1
@@ -94,21 +101,87 @@ func fitness() -> int:
 
 # Advance the shared cooldown and tracer timer while states handle movement and attack decisions
 func _physics_process(delta: float) -> void:
-	_cooldown = maxf(0.0, _cooldown - delta)
-	_tracer_time = maxf(0.0, _tracer_time - delta)
-	tracer.visible = _tracer_time > 0.0
+	cooldown = maxf(0.0, cooldown - delta)
+	tracer_time = maxf(0.0, tracer_time - delta)
+	tracer.visible = tracer_time > 0.0
 
 # Apply the cooldown and emit the requested attack. The ranged tracer is visual only.
 # It does not check collisions or apply damage.
 func try_attack(ranged: bool) -> void:
-	if _cooldown > 0.0:
+	if cooldown > 0.0:
 		return
-	_cooldown = attack_interval
+	cooldown = attack_interval
+	clear_active_attack()
+	
+	# Create the attack box
+	var attack := Attack_scene.instantiate() as Attack
+	add_child(attack)
+	attack.connect("area_entered", _on_attack_area_entered.bind(attack))
+	#TODO: right now this is making the circles disappear?
+	#TODO: ideally the circles should turn blue
+	attack.enable_collisions()
+	
+	# Create the collision shape for the attack
+	var shape := CircleShape2D.new()
+	shape.radius = 10.0
+	var collision_shape = attack.get_node("CollisionShape2D") as CollisionShape2D
+	collision_shape.shape = shape
+	
+	# Set the collision layer and mask
+	attack.collision_layer = 1 << 4
+	attack.collision_mask = 1 << 1
+	
+	# Determine where the target is
+	var aim_point = target.global_position
+	var direction = global_position.direction_to(aim_point)
+	
 	if ranged:
-		var aim_point := target.global_position
+		attack.global_position = aim_point
+	else:
+		global_position + direction * attack_range * 0.5
+		
+	active_attack = attack
+	get_tree().create_timer(0.5, false, true).timeout.connect(attack.queue_free)
+	
+	# Determine its location depending on if ranged or not
+	if ranged:
+		# Get the position of the target
+		# Create the visual ranged attack effect
 		tracer.points = PackedVector2Array([Vector2.ZERO, to_local(aim_point)])
-		_tracer_time = 0.12
+		tracer_time = 0.12
 		tracer.show()
-		ranged_attack_requested.emit(global_position, global_position.direction_to(aim_point))
+
+		# Emit attack request
+		ranged_attack_requested.emit(global_position, direction)
 		return
-	attack_requested.emit()
+	else:
+		# Emit attack request
+		attack_requested.emit()
+
+func _on_attack_area_entered(area: Area2D, attack: Attack) -> void:
+	if not attack.is_queued_for_deletion() and area is HealthComponent and area.get_parent() == target:
+		record_hit_scored()
+		attack.queue_free()
+
+func clear_active_attack() -> void:
+	if is_instance_valid(active_attack):
+		active_attack.queue_free()
+	active_attack = null
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area is Attack and health > 0:
+		process_attack(area)
+
+func process_attack(attack: Attack) -> void:
+	hits_taken += 1
+	health = max(health - attack.power, 0)
+	if health > 0:
+		if state_machine._current_state != damage_state:
+			state_machine.change_state(damage_state)
+	else:
+		clear_active_attack()
+		velocity = Vector2.ZERO
+		tracer_time = 0.0
+		hide()
+		# Keep the defeated slime in the roster so the controller can score and reset it.
+		state_machine.set_physics_process(false)
