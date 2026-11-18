@@ -26,6 +26,11 @@ func enter() -> void:
 	elif input_direction.y < 0:
 		attack_direction = "up"
 		player.sword_attack.rotation_degrees = 270
+	else:
+		if player.sprite.flip_h:
+			player.sword_attack.rotation_degrees = 180
+		else:
+			player.sword_attack.rotation_degrees = 0
 	
 	player.sprite.play(attack_direction + "_attack_1")
 	player.sword_attack.enable_collisions()
