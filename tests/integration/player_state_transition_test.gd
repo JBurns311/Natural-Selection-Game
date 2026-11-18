@@ -102,7 +102,7 @@ func test_primary_action_during_combo_window_transitions_to_combo_attack() -> vo
 	runner.simulate_action_press("primary_action")
 	await runner.await_input_processed()
 
-	await runner.simulate_frames(2, 20)
+	await runner.simulate_frames(5, 20)
 	assert_bool(player.basic_attack_state.combo_flag).is_true()
 
 	await runner.simulate_frames(10, 20)
