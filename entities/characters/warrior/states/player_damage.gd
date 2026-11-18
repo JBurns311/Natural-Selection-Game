@@ -8,6 +8,8 @@ func init(state_actor: CharacterBody2D) -> void:
 
 func enter() -> void:
 	player.sprite.play("damage")
+	player.sprite.self_modulate = Color.RED
+	player.move_and_slide() # don't know if this should be allowed to be called here
 	
 func physics_update(delta: float) -> void:
 	player.move(delta, Vector2.ZERO)
@@ -22,3 +24,4 @@ func physics_update(delta: float) -> void:
 	
 func exit() -> void:
 	player.handle_damage_taken = false
+	player.sprite.self_modulate = Color.WHITE

@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dm4kc0dcmwbgp" path="res://entities/characters/warrior/states/player_combo_attack.gd" id="7_udmcj"]
 [ext_resource type="PackedScene" uid="uid://bx7ep0nk7uifq" path="res://systems/combat/attack.tscn" id="8_5ryr2"]
 [ext_resource type="Script" uid="uid://hpq0utxwkq0o" path="res://entities/characters/warrior/states/player_damage.gd" id="10_udmcj"]
+[ext_resource type="Script" uid="uid://ywfdr8kllf7s" path="res://entities/characters/warrior/states/player_death.gd" id="11_4y8u7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_udmcj"]
 atlas = ExtResource("2_5ryr2")
@@ -422,6 +423,7 @@ size = Vector2(21.123493, 42.59999)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_gw5cb")
+speed = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=320577369]
 sprite_frames = SubResource("SpriteFrames_d6yxf")
@@ -477,6 +479,9 @@ metadata/_custom_type_script = "uid://dm4kc0dcmwbgp"
 
 [node name="PlayerDamage" type="Node" parent="StateMachine" unique_id=1493539481]
 script = ExtResource("10_udmcj")
+
+[node name="PlayerDeath" type="Node" parent="StateMachine" unique_id=931334227]
+script = ExtResource("11_4y8u7")
 
 [connection signal="area_entered" from="HealthComponent" to="." method="_on_health_component_area_entered"]
 

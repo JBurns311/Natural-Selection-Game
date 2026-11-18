@@ -12,16 +12,21 @@ class_name Player extends CharacterBody2D
 @onready var walk_state: PlayerWalk = $StateMachine/PlayerWalk
 @onready var basic_attack_state: PlayerBasicAttack = $StateMachine/PlayerBasicAttack
 @onready var combo_attack_state: PlayerComboAttack = $StateMachine/PlayerComboAttack
+@onready var damage_state: PlayerDamage = $StateMachine/PlayerDamage
+@onready var death_state: PlayerDeath = $StateMachine/PlayerDeath
+
+@onready var sword_attack: Attack = $SwordAttack
 
 var handle_damage_taken: bool = false
 var handle_death: bool = false
+
+signal player_death()
 
 func _ready() -> void:
 	state_machine.init(self)
 
 func _physics_process(_delta: float) -> void:
 	pass
-	# input_direction = Input.get_vector("left", "right", "up", "down")
 	
 func move(delta: float, direction: Vector2) -> void:
 	var delta_speed = speed * delta
@@ -38,11 +43,14 @@ func move(delta: float, direction: Vector2) -> void:
 	move_and_slide()
 
 func process_attack(attack: Attack) -> void:
-	hp_component.hp = max(hp_component.hp - attack.power, 0)
-	if hp_component.hp > 0:
-		handle_damage_taken = true
-	else:
-		handle_death = true
+	if not handle_damage_taken and not handle_death:
+		hp_component.hp = max(hp_component.hp - attack.power, 0)
+		velocity.x = move_toward(velocity.x, position.x - attack.position.x, attack.knockback_distance)
+		velocity.y = move_toward(velocity.y, position.y - attack.position.y, attack.knockback_distance)
+		if hp_component.hp > 0:
+			handle_damage_taken = true
+		else:
+			handle_death = true
 
 
 func _on_health_component_area_entered(area: Area2D) -> void:

@@ -15,15 +15,20 @@ func enter() -> void:
 	combo_flag = false
 	attack_direction = "side"
 	if input_direction.x > 0:
+		player.sword_attack.rotation_degrees = 0
 		player.sprite.flip_h = false
 	elif input_direction.x < 0:
 		player.sprite.flip_h = true
+		player.sword_attack.rotation_degrees = 180
 	elif input_direction.y > 0:
 		attack_direction = "down"
+		player.sword_attack.rotation_degrees = 90
 	elif input_direction.y < 0:
 		attack_direction = "up"
+		player.sword_attack.rotation_degrees = 270
 	
 	player.sprite.play(attack_direction + "_attack_1")
+	player.sword_attack.enable_collisions()
 	combo_timer.start()
 
 func physics_update(delta: float) -> void:
@@ -42,5 +47,6 @@ func physics_update(delta: float) -> void:
 			state_transition.emit(player.walk_state)
 
 func exit() -> void:
+	player.sword_attack.disable_collisions()
 	combo_flag = false
 	combo_timer.stop()
