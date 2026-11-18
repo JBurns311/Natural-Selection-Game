@@ -10,7 +10,8 @@ var active_attack: Attack
 signal attack_requested
 signal ranged_attack_requested(origin: Vector2, direction: Vector2)
 
-enum Strategy { DIRECT, SPIRAL, ZIGZAG, STATIONARY_RANGE, CIRCLE_RANGE }
+#enum Strategy { DIRECT, SPIRAL, ZIGZAG, STATIONARY_RANGE, CIRCLE_RANGE }
+enum Strategy { DIRECT, SPIRAL, ZIGZAG }
 
 # These are just placeholder strategies.
 # Direct strategy: Go directly towards the player and do melee attacks
@@ -25,9 +26,11 @@ const STRATEGY_COLORS := {
 	Strategy.DIRECT: Color.BLUE_VIOLET,
 	Strategy.SPIRAL: Color.BLUE,
 	Strategy.ZIGZAG: Color.SEA_GREEN,
-	Strategy.STATIONARY_RANGE: Color.YELLOW,
-	Strategy.CIRCLE_RANGE: Color.WHITE,
+	#Strategy.STATIONARY_RANGE: Color.YELLOW,
+	#Strategy.CIRCLE_RANGE: Color.WHITE,
 }
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 # strategy variable defined here
 @export_enum("Direct", "Spiral", "Zigzag", "Stationary Ranged", "Circling Ranged") var strategy: int = Strategy.DIRECT:
@@ -72,7 +75,9 @@ func has_target() -> bool:
 
 # Both ranged strategies share a state and differ in how they move
 func uses_range() -> bool:
-	return strategy == Strategy.STATIONARY_RANGE or strategy == Strategy.CIRCLE_RANGE
+	#return strategy == Strategy.STATIONARY_RANGE or strategy == Strategy.CIRCLE_RANGE
+	#TODO: add back if adding back range
+	return false
 
 # Reuse the slime at a new spawn position with fresh timers and hit counters
 # Input: new spawn location

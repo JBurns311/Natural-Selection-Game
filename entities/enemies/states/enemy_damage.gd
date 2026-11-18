@@ -2,8 +2,15 @@ class_name EnemyDamage extends State
 
 var _remaining: float
 
+var enemy: Enemy
+
+func init(state_actor: CharacterBody2D) -> void:
+	parent = state_actor
+	enemy = parent as Enemy
+
 func enter() -> void:
 	_remaining = 0.15
+	enemy.sprite.self_modulate = Color.RED
 
 func physics_update(delta: float) -> void:
 	var enemy := parent as Enemy
@@ -11,3 +18,4 @@ func physics_update(delta: float) -> void:
 	_remaining -= delta
 	if _remaining <= 0.0:
 		state_transition.emit(enemy.idle_state)
+	enemy.sprite.self_modulate = Color.WHITE

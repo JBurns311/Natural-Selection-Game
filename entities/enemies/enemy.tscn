@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://conii8aenq781" path="res://entities/enemies/states/enemy_walk.gd" id="5_walk"]
 [ext_resource type="Script" uid="uid://ck250yygvnty" path="res://entities/enemies/states/enemy_melee_attack.gd" id="6_melee"]
 [ext_resource type="Script" uid="uid://26jvnymyxkqg" path="res://entities/enemies/states/enemy_range_attack.gd" id="7_range"]
-[ext_resource type="Script" path="res://entities/enemies/states/enemy_damage.gd" id="8_damage"]
+[ext_resource type="Script" uid="uid://b4dhe1vthhp41" path="res://entities/enemies/states/enemy_damage.gd" id="8_damage"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wqcwe"]
 atlas = ExtResource("1_owq46")
@@ -101,7 +101,7 @@ script = ExtResource("6_melee")
 [node name="EnemyRangeAttack" type="Node" parent="StateMachine" unique_id=217333592]
 script = ExtResource("7_range")
 
-[node name="EnemyDamage" type="Node" parent="StateMachine"]
+[node name="EnemyDamage" type="Node" parent="StateMachine" unique_id=1356357685]
 script = ExtResource("8_damage")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
