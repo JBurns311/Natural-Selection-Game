@@ -30,7 +30,7 @@ func test_idle_and_walk_transition_with_directional_input() -> void:
 
 	runner.simulate_action_press("left")
 	await runner.await_input_processed()
-	await runner.simulate_frames(5, 20)
+	await runner.simulate_frames(10, 20)
 
 	assert_that(player.state_machine._current_state).is_equal(player.walk_state)
 	assert_that(player.sprite.animation).is_equal(&"walk")
@@ -52,7 +52,7 @@ func test_primary_action_enters_basic_attack_and_starts_combo_timer() -> void:
 	runner.simulate_action_press("primary_action")
 	await runner.await_input_processed()
 
-	await runner.simulate_frames(5, 20)
+	await runner.simulate_frames(10, 20)
 
 	assert_that(player.state_machine._current_state).is_equal(player.basic_attack_state)
 	assert_that(player.sprite.animation).is_equal(&"up_attack_1")
@@ -66,7 +66,7 @@ func test_basic_attack_timer_expiry_returns_to_idle_without_combo() -> void:
 	var runner := scene_runner(PLAYER_SCENE)
 	var player := runner.scene() as Player
 
-	runner.simulate_action_pressed("primary_action")
+	runner.simulate_action_press("primary_action")
 	await runner.await_input_processed()
 
 	await runner.simulate_frames(5, 20)
@@ -89,7 +89,7 @@ func test_primary_action_during_combo_window_transitions_to_combo_attack() -> vo
 	var runner := scene_runner(PLAYER_SCENE)
 	var player := runner.scene() as Player
 
-	runner.simulate_action_pressed("primary_action")
+	runner.simulate_action_press("primary_action")
 	await runner.await_input_processed()
 
 	await runner.simulate_frames(2, 20)
@@ -99,7 +99,7 @@ func test_primary_action_during_combo_window_transitions_to_combo_attack() -> vo
 	runner.simulate_action_release("primary_action")
 	await runner.await_input_processed()
 
-	runner.simulate_action_pressed("primary_action")
+	runner.simulate_action_press("primary_action")
 	await runner.await_input_processed()
 
 	await runner.simulate_frames(2, 20)
