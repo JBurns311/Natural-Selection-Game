@@ -30,6 +30,7 @@ const STRATEGY_COLORS := {
 }
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var health_bar: ProgressBar = $HealthBar
 
 # strategy variable defined here
 @export_enum("Direct", "Spiral", "Zigzag", "Stationary Ranged", "Circling Ranged") var strategy: int = Strategy.DIRECT:
@@ -61,6 +62,8 @@ var cooldown: float = 0.0
 var projectiles: Array[Attack] = []
 
 func _ready() -> void:
+	health_bar.max_value = max_health
+	health_bar.value = health
 	update_strategy_display()
 	state_machine.init(self)
 
@@ -85,6 +88,7 @@ func reset_trial(spawn_position: Vector2) -> void:
 	projectiles.clear()
 	clear_active_attack()
 	health = max_health
+	health_bar.value = health
 	show()
 	state_machine.set_physics_process(true)
 	if state_machine._current_state != idle_state:
@@ -179,6 +183,7 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 func process_attack(attack: Attack) -> void:
 	hits_taken += 1
 	health = max(health - attack.power, 0)
+	health_bar.value = health
 	if health > 0:
 		if state_machine._current_state != damage_state:
 			state_machine.change_state(damage_state)

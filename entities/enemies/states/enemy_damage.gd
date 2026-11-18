@@ -9,6 +9,7 @@ func init(state_actor: CharacterBody2D) -> void:
 	enemy = parent as Enemy
 
 func enter() -> void:
+	enemy.sprite.play("take_damage")
 	_remaining = 0.15
 	enemy.sprite.self_modulate = Color.RED
 
@@ -18,4 +19,7 @@ func physics_update(delta: float) -> void:
 	_remaining -= delta
 	if _remaining <= 0.0:
 		state_transition.emit(enemy.idle_state)
-	enemy.sprite.self_modulate = Color.WHITE
+
+func exit() -> void:
+	enemy.sprite.play("default")
+	enemy.update_strategy_display()

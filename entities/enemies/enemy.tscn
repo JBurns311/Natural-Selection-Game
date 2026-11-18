@@ -25,6 +25,22 @@ region = Rect2(48, 24, 24, 24)
 atlas = ExtResource("1_owq46")
 region = Rect2(72, 24, 24, 24)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gj3y3"]
+atlas = ExtResource("1_owq46")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56i32"]
+atlas = ExtResource("1_owq46")
+region = Rect2(24, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sb13e"]
+atlas = ExtResource("1_owq46")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3udgd"]
+atlas = ExtResource("1_owq46")
+region = Rect2(72, 48, 24, 24)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_msovg"]
 animations = [{
 "frames": [{
@@ -43,7 +59,30 @@ animations = [{
 "loop": 1,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gj3y3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56i32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sb13e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3udgd")
+}],
+"loop": 1,
+"name": &"take_damage",
+"speed": 5.0
 }]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_background"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(1, 0.5, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wqcwe"]
 size = Vector2(8, 10)
@@ -56,6 +95,7 @@ script = ExtResource("2_enemy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=181403813]
 sprite_frames = SubResource("SpriteFrames_msovg")
+animation = &"take_damage"
 autoplay = "default"
 
 [node name="StrategyLabel" type="Label" parent="." unique_id=1932825852]
@@ -67,6 +107,18 @@ pivot_offset = Vector2(64, 0)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1802377541]
+offset_left = -12.0
+offset_top = -13.0
+offset_right = 12.0
+offset_bottom = -9.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_health_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+max_value = 30.0
+value = 30.0
+show_percentage = false
 
 [node name="BodyShape" type="CollisionShape2D" parent="." unique_id=957623843]
 position = Vector2(0, 6)
