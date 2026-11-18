@@ -246,7 +246,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"down_attack_1",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -269,7 +269,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"down_attack_2",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -315,7 +315,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"side_attack_1",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -338,7 +338,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"side_attack_2",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -361,7 +361,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"up_attack_1",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -384,7 +384,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"up_attack_2",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -414,10 +414,16 @@ animations = [{
 size = Vector2(30.5, 51)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vyept"]
-size = Vector2(59, 106)
+size = Vector2(54, 106)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_af1fn"]
 size = Vector2(21.123493, 42.59999)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4y8u7"]
+bg_color = Color(0.15, 0.15, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mihr3"]
+bg_color = Color(1, 0.5, 0, 1)
 
 [node name="Player" type="CharacterBody2D" unique_id=58085995]
 collision_layer = 2
@@ -426,8 +432,8 @@ script = ExtResource("1_gw5cb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=320577369]
 sprite_frames = SubResource("SpriteFrames_d6yxf")
-animation = &"damage"
-frame = 2
+animation = &"down_attack_2"
+frame = 5
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1336090926]
@@ -439,18 +445,31 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" parent="SwordAttack" index="0" unique_id=1121858233]
-position = Vector2(59.5, 0)
+position = Vector2(57, 0)
 shape = SubResource("RectangleShape2D_vyept")
 
 [node name="HealthComponent" parent="." unique_id=2046431478 instance=ExtResource("4_gsbtk")]
 collision_layer = 2
 collision_mask = 16
-max_hp = 1000
+max_hp = 100
 
 [node name="CollisionShape2D" parent="HealthComponent" index="0" unique_id=698536266]
 position = Vector2(-1.0113096, 6.581807)
 scale = Vector2(1.4212906, 1.1933427)
 shape = SubResource("RectangleShape2D_af1fn")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=943193025]
+offset_left = -17.0
+offset_top = -64.0
+offset_right = 7.0
+offset_bottom = -60.0
+scale = Vector2(1.5, 1.5)
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_4y8u7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mihr3")
+max_value = 30.0
+value = 30.0
+show_percentage = false
 
 [node name="StateMachine" type="Node" parent="." unique_id=1003964418 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_gw5cb")
@@ -470,7 +489,7 @@ script = ExtResource("6_gsbtk")
 metadata/_custom_type_script = "uid://cru6au1rnuidk"
 
 [node name="ComboTimer" type="Timer" parent="StateMachine/PlayerBasicAttack" unique_id=16677403]
-wait_time = 0.6
+wait_time = 0.4
 one_shot = true
 
 [node name="PlayerComboAttack" type="Node" parent="StateMachine" unique_id=1198399189]

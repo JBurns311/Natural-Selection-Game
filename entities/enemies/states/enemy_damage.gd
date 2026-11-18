@@ -12,6 +12,7 @@ func enter() -> void:
 	enemy.sprite.play("take_damage")
 	_remaining = 0.15
 	enemy.sprite.self_modulate = Color.RED
+	enemy.move_and_slide()
 
 func physics_update(delta: float) -> void:
 	var enemy := parent as Enemy

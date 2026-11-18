@@ -185,6 +185,9 @@ func process_attack(attack: Attack) -> void:
 	health = max(health - attack.power, 0)
 	health_bar.value = health
 	if health > 0:
+		var knockback_vel := (global_position - attack.global_position).normalized() * attack.knockback_distance
+		velocity.x = move_toward(velocity.x, knockback_vel.x, attack.knockback_distance)
+		velocity.y = move_toward(velocity.y, knockback_vel.y, attack.knockback_distance)
 		if state_machine._current_state != damage_state:
 			state_machine.change_state(damage_state)
 	else:
