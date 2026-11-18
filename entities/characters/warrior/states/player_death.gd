@@ -15,7 +15,6 @@ func physics_update(delta: float) -> void:
 	player.move(delta, Vector2.ZERO)
 	
 	if not player.handle_death:
-
 		state_transition.emit(player.idle_state)
 	
 func exit() -> void:

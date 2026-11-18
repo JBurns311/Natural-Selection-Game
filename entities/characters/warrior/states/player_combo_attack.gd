@@ -30,6 +30,11 @@ func physics_update(_delta: float) -> void:
 	# if player velocity isn't zero in state move towards that
 	player.move(_delta, Vector2.ZERO)
 	
+	if player.handle_death:
+		state_transition.emit(player.death_state)
+	elif player.handle_damage_taken:
+		state_transition.emit(player.damage_state)
+	
 	if !player.sprite.is_playing():
 		if Input.get_vector("left", "right", "up", "down") == Vector2.ZERO:
 			state_transition.emit(player.idle_state)

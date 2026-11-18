@@ -38,6 +38,12 @@ func physics_update(delta: float) -> void:
 	if Input.is_action_just_pressed("primary_action"):
 		combo_flag = true
 	
+	# death and damage states will cancel an attack 
+	if player.handle_death:
+		state_transition.emit(player.death_state)
+	elif player.handle_damage_taken:
+		state_transition.emit(player.damage_state)
+	
 	if combo_timer.is_stopped():
 		if combo_flag:
 			state_transition.emit(player.combo_attack_state)
