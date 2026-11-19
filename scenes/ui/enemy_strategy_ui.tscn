@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://b2hsaurdnsq4y"]
+
+[ext_resource type="Script" uid="uid://dhw83it0cpjyc" path="res://scenes/ui/enemy_strategy_ui.gd" id="1_strategy_ui"]
+
+[node name="EnemyStrategyUI" type="Control" unique_id=2016200316]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_strategy_ui")
+
+[node name="Background" type="ColorRect" parent="." unique_id=371017271]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.09, 0.13, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1001102910]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer" unique_id=708318959]
+custom_minimum_size = Vector2(1040, 0)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Panel" unique_id=93433645]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="Content" type="VBoxContainer" parent="CenterContainer/Panel/Margin" unique_id=1989387837]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/Margin/Content" unique_id=2045153152]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "View Enemy Strategies"
+horizontal_alignment = 1
+
+[node name="MainColumns" type="HBoxContainer" parent="CenterContainer/Panel/Margin/Content" unique_id=509527429]
+custom_minimum_size = Vector2(0, 410)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="StrategyPanel" type="PanelContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns" unique_id=482846379]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StrategyMargin" type="MarginContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel" unique_id=2014979774]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="StrategyList" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin" unique_id=189367766]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="StrategyListTitle" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=1149477197]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Enemy Strategies"
+horizontal_alignment = 1
+
+[node name="Strategy1Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=417721506]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Strategy 1"
+
+[node name="Strategy2Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=243414213]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+toggle_mode = true
+text = "Strategy 2"
+
+[node name="Strategy3Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=1712483270]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+toggle_mode = true
+text = "Strategy 3"
+
+[node name="DetailsPanel" type="PanelContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns" unique_id=625815217]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DetailsMargin" type="MarginContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel" unique_id=381878171]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="DetailsContent" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin" unique_id=95103847]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DetailTitle" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent" unique_id=1307194095]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Strategy {number} Description"
+horizontal_alignment = 1
+
+[node name="DetailDescription" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent" unique_id=61131067]
+layout_mode = 2
+text = "Details for each strategy"
+horizontal_alignment = 1
+
+[node name="NetworkTitle" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent" unique_id=605691753]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Neural Network Layout Preview"
+horizontal_alignment = 1
+
+[node name="Layers" type="HBoxContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent" unique_id=105189879]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="InputLayer" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers" unique_id=115572254]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="InputTitle" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/InputLayer" unique_id=468532475]
+layout_mode = 2
+text = "Input layer"
+horizontal_alignment = 1
+
+[node name="InputNode1" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/InputLayer" unique_id=1148555542]
+layout_mode = 2
+text = "Input node"
+horizontal_alignment = 1
+
+[node name="OutputLayer" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers" unique_id=143947480]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="OutputTitle" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=589897223]
+layout_mode = 2
+text = "Output layer"
+horizontal_alignment = 1
+
+[node name="OutputNode1" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=122927420]
+layout_mode = 2
+text = "Output node 1"
+horizontal_alignment = 1
+
+[node name="OutputNode2" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=2125415575]
+layout_mode = 2
+text = "Output node 2"
+horizontal_alignment = 1
+
+[node name="OutputNode3" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=737359285]
+layout_mode = 2
+text = "Output node 3"
+horizontal_alignment = 1
+
+[node name="OutputNode4" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=524907777]
+layout_mode = 2
+text = "Output node 4"
+horizontal_alignment = 1
+
+[node name="OutputNode5" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=577430026]
+layout_mode = 2
+text = "Output node 5"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="CenterContainer/Panel/Margin/Content" unique_id=89745171]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Back to Main Menu"
