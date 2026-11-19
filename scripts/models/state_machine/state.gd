@@ -1,5 +1,7 @@
 class_name State extends Node
 
+@warning_ignore("unused_signal")
+
 signal state_transition(new_state: State)
 
 var parent: CharacterBody2D
