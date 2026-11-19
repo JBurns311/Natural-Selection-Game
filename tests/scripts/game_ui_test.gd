@@ -99,7 +99,7 @@ func test_enemy_strategy_viewer_shows_network_layers() -> void:
 	assert_int(inputs.get_child_count()).is_equal(2)
 	assert_int(outputs.get_child_count()).is_equal(6)
 	assert_str(input_node.text).is_equal("Distance from player")
-	assert_str(output_title.text).is_equal("Strategy outputs")
+	assert_str(output_title.text).is_equal("Output Layer")
 	assert_str(selection_rule.text).is_equal("The strategy with the highest output value is chosen.")
 	for index in range(5):
 		var enemy_button: Button = viewer.get_node("%s/Enemy%dButton" % [strategy_list_path, index + 1])
