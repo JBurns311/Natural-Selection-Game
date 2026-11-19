@@ -68,6 +68,9 @@ func test_settings_menu_has_display_audio_and_control_options() -> void:
 
 
 func test_enemy_strategy_viewer_shows_network_layers() -> void:
+	for index in range(5):
+		EnemyStrategyRegistry.set_enemy_strategy(index, index, 1)
+
 	var viewer := ENEMY_STRATEGY_SCENE.instantiate() as EnemyStrategyUI
 	add_child(viewer)
 
@@ -77,37 +80,63 @@ func test_enemy_strategy_viewer_shows_network_layers() -> void:
 	var details_panel: PanelContainer = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel")
 	var layers: HBoxContainer = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers")
 	var inputs: VBoxContainer = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/InputLayer")
+	var input_node: Label = inputs.get_node("InputNode1")
 	var outputs: VBoxContainer = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer")
+	var output_title: Label = outputs.get_node("OutputTitle")
 	var detail_title: Label = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/DetailTitle")
+	var detail_description: Label = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/DetailDescription")
+	var selection_rule: Label = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/SelectionRule")
+	var strategy_list_path := "CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList"
+	var expected_strategies := ["Direct", "Spiral", "Zigzag", "Stationary Ranged", "Circling Ranged"]
 
 	assert_str(title.text).is_equal("View Enemy Strategies")
-	assert_str(detail_title.text).is_equal("Strategy 1 Description")
+	assert_str(detail_title.text).is_equal("Enemy 1 - Direct")
+	assert_str(detail_description.text).is_equal("Moves directly toward the player and uses melee attacks.")
 	assert_int(columns.get_child_count()).is_equal(2)
-	assert_int(strategy_list.get_child_count()).is_equal(4)
+	assert_int(strategy_list.get_child_count()).is_equal(6)
 	assert_bool(details_panel.visible).is_true()
 	assert_int(layers.get_child_count()).is_equal(2)
 	assert_int(inputs.get_child_count()).is_equal(2)
 	assert_int(outputs.get_child_count()).is_equal(6)
+	assert_str(input_node.text).is_equal("Distance from player")
+	assert_str(output_title.text).is_equal("Output Layer")
+	assert_str(selection_rule.text).is_equal("The strategy with the highest output value is chosen.")
+	for index in range(5):
+		var enemy_button: Button = viewer.get_node("%s/Enemy%dButton" % [strategy_list_path, index + 1])
+		assert_str(enemy_button.text).is_equal("Enemy %d: %s" % [index + 1, expected_strategies[index]])
+		var output_node: Label = outputs.get_node("OutputNode%d" % (index + 1))
+		assert_str(output_node.text).is_equal(expected_strategies[index])
 
 	viewer.queue_free()
 
 
-func test_enemy_strategy_buttons_select_a_strategy_slot() -> void:
+func test_enemy_strategy_menu_updates_when_an_enemy_changes_strategy() -> void:
+	EnemyStrategyRegistry.set_enemy_strategy(1, 1, 1)
 	var viewer := ENEMY_STRATEGY_SCENE.instantiate() as EnemyStrategyUI
 	add_child(viewer)
 
-	var strategy_two: Button = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList/Strategy2Button")
+	var enemy_two: Button = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList/Enemy2Button")
 	var detail_title: Label = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/DetailTitle")
 	var detail_description: Label = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/DetailDescription")
-	var authored_description := detail_description.text
-	strategy_two.pressed.emit()
+	var spiral_output: Label = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer/OutputNode2")
+	var circle_output: Label = viewer.get_node("CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer/OutputNode5")
+	enemy_two.pressed.emit()
 
-	assert_int(viewer.selected_strategy_index).is_equal(1)
-	assert_str(detail_title.text).is_equal("Strategy 2 Description")
-	assert_str(detail_description.text).is_equal(authored_description)
-	assert_bool(strategy_two.button_pressed).is_true()
+	assert_int(viewer.selected_enemy_index).is_equal(1)
+	assert_str(detail_title.text).is_equal("Enemy 2 - Spiral")
+	assert_str(detail_description.text).is_equal("Moves in a spiral toward the player and uses melee attacks.")
+	assert_bool(enemy_two.button_pressed).is_true()
+	assert_bool(spiral_output.modulate == Color(0.4, 1.0, 0.5, 1.0)).is_true()
+
+	EnemyStrategyRegistry.set_enemy_strategy(1, 4, 2)
+	assert_str(enemy_two.text).is_equal("Enemy 2: Circling Ranged")
+	assert_str(detail_title.text).is_equal("Enemy 2 - Circling Ranged")
+	assert_str(detail_description.text).is_equal("Circles the player and fires ranged attacks.")
+	assert_bool(spiral_output.modulate == Color.WHITE).is_true()
+	assert_bool(circle_output.modulate == Color(0.4, 1.0, 0.5, 1.0)).is_true()
 
 	viewer.queue_free()
+	EnemyStrategyRegistry.set_enemy_strategy(1, 1, 1)
 
 
 func test_control_button_rebinds_its_input_action() -> void:
