@@ -2,16 +2,17 @@ class_name Player extends CharacterBody2D
 
 @export var speed: float = 18000.0
 
-# var input_direction: Vector2 = Vector2.ZERO
-
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
+@onready var input_buffer: InputBuffer = $InputBuffer
 
 #state imports
 @onready var idle_state: State = $StateMachine/PlayerIdle
 @onready var walk_state: PlayerWalk = $StateMachine/PlayerWalk
 @onready var basic_attack_state: PlayerBasicAttack = $StateMachine/PlayerBasicAttack
 @onready var combo_attack_state: PlayerComboAttack = $StateMachine/PlayerComboAttack
+@onready var dash_state: PlayerDash = $StateMachine/PlayerDash
+
 
 
 func _ready() -> void:

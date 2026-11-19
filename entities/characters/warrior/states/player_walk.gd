@@ -17,3 +17,7 @@ func physics_update(delta: float) -> void:
 		state_transition.emit(player.basic_attack_state)
 	elif input_direction == Vector2.ZERO:
 		state_transition.emit(player.idle_state)
+	elif Input.is_action_just_pressed("dash"):
+		print("Dash State Entered from Walk State")
+		state_transition.emit(player.dash_state)
+	

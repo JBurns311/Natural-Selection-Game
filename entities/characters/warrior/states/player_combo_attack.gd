@@ -9,7 +9,9 @@ func init(state_actor: CharacterBody2D) -> void:
 	
 func enter() -> void:
 	var input_direction = Input.get_vector("left", "right", "up", "down")
+	player.input_buffer.enable(true)
 	attack_direction = "side"
+
 	if input_direction.x > 0:
 		player.sprite.flip_h = false
 	elif input_direction.x < 0:
@@ -28,5 +30,11 @@ func physics_update(_delta: float) -> void:
 	if !player.sprite.is_playing():
 		if Input.get_vector("left", "right", "up", "down") == Vector2.ZERO:
 			state_transition.emit(player.idle_state)
+		elif Input.is_action_just_pressed("dash"):
+			print("Dash State Entered from Combo Attack State")
+			state_transition.emit(player.dash_state)
 		else:
 			state_transition.emit(player.walk_state)
+
+func exit() -> void:
+	player.input_buffer.enable(false)

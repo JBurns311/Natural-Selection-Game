@@ -7,6 +7,32 @@
 [ext_resource type="Script" uid="uid://3v7eejdb30l1" path="res://entities/characters/warrior/states/player_walk.gd" id="5_5ryr2"]
 [ext_resource type="Script" uid="uid://cru6au1rnuidk" path="res://entities/characters/warrior/states/player_basic_attack.gd" id="6_gsbtk"]
 [ext_resource type="Script" uid="uid://dm4kc0dcmwbgp" path="res://entities/characters/warrior/states/player_combo_attack.gd" id="7_udmcj"]
+[ext_resource type="Script" uid="uid://55ol8hstoscq" path="res://entities/characters/warrior/states/player_dash.gd" id="8_5ryr2"]
+[ext_resource type="Script" uid="uid://cpbpfq3btpo5m" path="res://entities/characters/warrior/input_buffer.gd" id="9_gsbtk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ryr2"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsbtk"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udmcj"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y8u7"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(576, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mihr3"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(768, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jke7"]
+atlas = ExtResource("2_5ryr2")
+region = Rect2(960, 192, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("2_5ryr2")
@@ -200,6 +226,29 @@ region = Rect2(960, 192, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_5ryr2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsbtk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udmcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4y8u7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mihr3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jke7")
+}],
+"loop": 1,
+"name": &"dash",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_g2els")
 }, {
 "duration": 1.0,
@@ -388,7 +437,9 @@ script = ExtResource("1_gw5cb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=320577369]
 sprite_frames = SubResource("SpriteFrames_d6yxf")
-animation = &"down_attack_1"
+animation = &"dash"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1336090926]
 position = Vector2(-0.75, 7)
@@ -418,3 +469,9 @@ one_shot = true
 [node name="PlayerComboAttack" type="Node" parent="StateMachine" unique_id=1198399189]
 script = ExtResource("7_udmcj")
 metadata/_custom_type_script = "uid://dm4kc0dcmwbgp"
+
+[node name="PlayerDash" type="Node" parent="StateMachine" unique_id=794875378]
+script = ExtResource("8_5ryr2")
+
+[node name="InputBuffer" type="Node" parent="." unique_id=411676731]
+script = ExtResource("9_gsbtk")
