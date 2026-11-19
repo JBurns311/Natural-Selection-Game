@@ -61,7 +61,7 @@ The only main branch for this repository is main. All other branches are tempora
 
 The branching model for this repository is GitHub Flow:
 
->**Issue -> Branch From Main -> Commit and Push Changes -> Pull Request -> Two Code Review Approvals -> Merge Into Main -> Delete Branch**
+>**Issue -> Branch From Main -> Commit and Push Changes -> Pull Request -> One Code Review Approvals -> Merge Into Main -> Delete Branch**
 
 ### Branch Naming Convention
 
