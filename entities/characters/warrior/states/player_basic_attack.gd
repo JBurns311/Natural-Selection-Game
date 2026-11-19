@@ -15,6 +15,7 @@ func enter() -> void:
 	combo_flag = false
 	attack_direction = "side"
 	if input_direction.x > 0:
+<<<<<<< HEAD
 		player.sprite.flip_h = false
 	elif input_direction.x < 0:
 		player.sprite.flip_h = true
@@ -29,10 +30,45 @@ func enter() -> void:
 func physics_update(_delta: float) -> void:
 	# if player velocity isn't zero in state move towards that
 	player.move(_delta, Vector2.ZERO)
+=======
+		player.sword_attack.rotation_degrees = 0
+		player.sprite.flip_h = false
+	elif input_direction.x < 0:
+		player.sprite.flip_h = true
+		player.sword_attack.rotation_degrees = 180
+	elif input_direction.y > 0:
+		attack_direction = "down"
+		player.sword_attack.rotation_degrees = 90
+	elif input_direction.y < 0:
+		attack_direction = "up"
+		player.sword_attack.rotation_degrees = 270
+	else:
+		if player.sprite.flip_h:
+			player.sword_attack.rotation_degrees = 180
+		else:
+			player.sword_attack.rotation_degrees = 0
+	
+	player.sprite.play(attack_direction + "_attack_1")
+	player.sword_attack.enable_collisions()
+	combo_timer.start()
+
+func physics_update(delta: float) -> void:
+	# if player velocity isn't zero in state move towards that
+	player.move(delta, Vector2.ZERO)
+>>>>>>> origin/main
 	
 	if Input.is_action_just_pressed("primary_action"):
 		combo_flag = true
 	
+<<<<<<< HEAD
+=======
+	# death and damage states will cancel an attack 
+	if player.handle_death:
+		state_transition.emit(player.death_state)
+	elif player.handle_damage_taken:
+		state_transition.emit(player.damage_state)
+	
+>>>>>>> origin/main
 	if combo_timer.is_stopped():
 		if combo_flag:
 			state_transition.emit(player.combo_attack_state)
@@ -42,4 +78,10 @@ func physics_update(_delta: float) -> void:
 			state_transition.emit(player.walk_state)
 
 func exit() -> void:
+<<<<<<< HEAD
 	combo_flag = false
+=======
+	player.sword_attack.disable_collisions()
+	combo_flag = false
+	combo_timer.stop()
+>>>>>>> origin/main
