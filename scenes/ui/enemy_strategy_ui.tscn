@@ -75,24 +75,36 @@ theme_override_font_sizes/font_size = 22
 text = "Enemy Strategies"
 horizontal_alignment = 1
 
-[node name="Strategy1Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=417721506]
+[node name="Enemy1Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=1412792432]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 toggle_mode = true
 button_pressed = true
-text = "Strategy 1"
+text = "Enemy 1"
 
-[node name="Strategy2Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=243414213]
+[node name="Enemy2Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=960284276]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 toggle_mode = true
-text = "Strategy 2"
+text = "Enemy 2"
 
-[node name="Strategy3Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=1712483270]
+[node name="Enemy3Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=1743315030]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 toggle_mode = true
-text = "Strategy 3"
+text = "Enemy 3"
+
+[node name="Enemy4Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=611646095]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+toggle_mode = true
+text = "Enemy 4"
+
+[node name="Enemy5Button" type="Button" parent="CenterContainer/Panel/Margin/Content/MainColumns/StrategyPanel/StrategyMargin/StrategyList" unique_id=1556427760]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+toggle_mode = true
+text = "Enemy 5"
 
 [node name="DetailsPanel" type="PanelContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns" unique_id=625815217]
 layout_mode = 2
@@ -112,7 +124,7 @@ theme_override_constants/separation = 12
 [node name="DetailTitle" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent" unique_id=1307194095]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "Strategy {number} Description"
+text = "Enemy {enemy} - {strategy}"
 horizontal_alignment = 1
 
 [node name="DetailDescription" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent" unique_id=61131067]
@@ -143,7 +155,7 @@ horizontal_alignment = 1
 
 [node name="InputNode1" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/InputLayer" unique_id=1148555542]
 layout_mode = 2
-text = "Input node"
+text = "Distance from player"
 horizontal_alignment = 1
 
 [node name="OutputLayer" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers" unique_id=143947480]
@@ -153,32 +165,37 @@ theme_override_constants/separation = 8
 
 [node name="OutputTitle" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=589897223]
 layout_mode = 2
-text = "Output layer"
+text = "Output Layer"
 horizontal_alignment = 1
 
 [node name="OutputNode1" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=122927420]
 layout_mode = 2
-text = "Output node 1"
+text = "Direct"
 horizontal_alignment = 1
 
 [node name="OutputNode2" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=2125415575]
 layout_mode = 2
-text = "Output node 2"
+text = "Spiral"
 horizontal_alignment = 1
 
 [node name="OutputNode3" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=737359285]
 layout_mode = 2
-text = "Output node 3"
+text = "Zigzag"
 horizontal_alignment = 1
 
 [node name="OutputNode4" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=524907777]
 layout_mode = 2
-text = "Output node 4"
+text = "Stationary Ranged"
 horizontal_alignment = 1
 
 [node name="OutputNode5" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent/Layers/OutputLayer" unique_id=577430026]
 layout_mode = 2
-text = "Output node 5"
+text = "Circling Ranged"
+horizontal_alignment = 1
+
+[node name="SelectionRule" type="Label" parent="CenterContainer/Panel/Margin/Content/MainColumns/DetailsPanel/DetailsMargin/DetailsContent" unique_id=1748832006]
+layout_mode = 2
+text = "The strategy with the highest output value is chosen."
 horizontal_alignment = 1
 
 [node name="BackButton" type="Button" parent="CenterContainer/Panel/Margin/Content" unique_id=89745171]
