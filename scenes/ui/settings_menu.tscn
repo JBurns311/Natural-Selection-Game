@@ -1,0 +1,116 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/settings_menu.gd" id="1_settings"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.09, 0.13, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="CenterContainer/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Tabs" type="TabContainer" parent="CenterContainer/Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+
+[node name="Display" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/Tabs"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="DisplayHeading" type="Label" parent="CenterContainer/Panel/Margin/Content/Tabs/Display"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Display"
+
+[node name="ResolutionOption" type="OptionButton" parent="CenterContainer/Panel/Margin/Content/Tabs/Display"]
+layout_mode = 2
+
+[node name="FullscreenCheck" type="CheckButton" parent="CenterContainer/Panel/Margin/Content/Tabs/Display"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="Audio" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/Tabs"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="AudioHeading" type="Label" parent="CenterContainer/Panel/Margin/Content/Tabs/Audio"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Audio"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="CenterContainer/Panel/Margin/Content/Tabs/Audio"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="MuteCheck" type="CheckButton" parent="CenterContainer/Panel/Margin/Content/Tabs/Audio"]
+layout_mode = 2
+text = "Mute"
+
+[node name="Controls" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/Tabs"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ControlsHeading" type="Label" parent="CenterContainer/Panel/Margin/Content/Tabs/Controls"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Controls"
+
+[node name="MoveLeftButton" type="Button" parent="CenterContainer/Panel/Margin/Content/Tabs/Controls"]
+layout_mode = 2
+text = "Move Left"
+
+[node name="MoveRightButton" type="Button" parent="CenterContainer/Panel/Margin/Content/Tabs/Controls"]
+layout_mode = 2
+text = "Move Right"
+
+[node name="JumpButton" type="Button" parent="CenterContainer/Panel/Margin/Content/Tabs/Controls"]
+layout_mode = 2
+text = "Jump"
+
+[node name="BackButton" type="Button" parent="CenterContainer/Panel/Margin/Content"]
+layout_mode = 2
+text = "Back"
