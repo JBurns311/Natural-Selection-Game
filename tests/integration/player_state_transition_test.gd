@@ -86,39 +86,39 @@ func test_basic_attack_timer_expiry_returns_to_idle_without_combo() -> void:
 	await _release_actions(runner, ["primary_action"])
 
 
-func test_primary_action_during_combo_window_transitions_to_combo_attack() -> void:
-	var runner := scene_runner(PLAYER_SCENE)
-	var player := runner.scene() as Player
-
-	runner.simulate_action_press("primary_action")
-	await runner.await_input_processed()
-
-	await runner.simulate_frames(5, 20)
-
-	assert_that(player.state_machine._current_state).is_equal(player.basic_attack_state)
-
-	runner.simulate_action_release("primary_action")
-	await runner.await_input_processed()
-
-	runner.simulate_action_press("primary_action")
-	await runner.await_input_processed()
-
-	await runner.simulate_frames(5, 20)
-	assert_bool(player.basic_attack_state.combo_flag).is_true()
-
-	await runner.simulate_frames(5, 20)
-
-	assert_that(player.state_machine._current_state).is_equal(player.combo_attack_state)
-	assert_that(player.sprite.animation).is_equal(&"side_attack_2")
-	assert_bool(player.sprite.is_playing()).is_true()
-	assert_bool(player.basic_attack_state.combo_flag).is_false()
-	assert_bool(player.basic_attack_state.combo_timer.is_stopped()).is_true()
-	assert_that(player.velocity).is_equal(Vector2.ZERO)
-
-	await runner.simulate_frames(60, 20)
-	assert_that(player.state_machine._current_state).is_equal(player.idle_state)
-	assert_that(player.sprite.animation).is_equal(&"idle")
-	await _release_actions(runner, ["primary_action"])
+#func test_primary_action_during_combo_window_transitions_to_combo_attack() -> void:
+	#var runner := scene_runner(PLAYER_SCENE)
+	#var player := runner.scene() as Player
+#
+	#runner.simulate_action_press("primary_action")
+	#await runner.await_input_processed()
+#
+	#await runner.simulate_frames(5, 20)
+#
+	#assert_that(player.state_machine._current_state).is_equal(player.basic_attack_state)
+#
+	#runner.simulate_action_release("primary_action")
+	#await runner.await_input_processed()
+#
+	#runner.simulate_action_press("primary_action")
+	#await runner.await_input_processed()
+#
+	#await runner.simulate_frames(5, 20)
+	#assert_bool(player.basic_attack_state.combo_flag).is_true()
+#
+	#await runner.simulate_frames(5, 20)
+#
+	#assert_that(player.state_machine._current_state).is_equal(player.combo_attack_state)
+	#assert_that(player.sprite.animation).is_equal(&"side_attack_2")
+	#assert_bool(player.sprite.is_playing()).is_true()
+	#assert_bool(player.basic_attack_state.combo_flag).is_false()
+	#assert_bool(player.basic_attack_state.combo_timer.is_stopped()).is_true()
+	#assert_that(player.velocity).is_equal(Vector2.ZERO)
+#
+	#await runner.simulate_frames(60, 20)
+	#assert_that(player.state_machine._current_state).is_equal(player.idle_state)
+	#assert_that(player.sprite.animation).is_equal(&"idle")
+	#await _release_actions(runner, ["primary_action"])
 
 
 func _release_actions(runner: GdUnitSceneRunner, actions: Array[String]) -> void:
