@@ -184,4 +184,4 @@ horizontal_alignment = 1
 [node name="BackButton" type="Button" parent="CenterContainer/Panel/Margin/Content" unique_id=89745171]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-text = "Back to Main Menu"
+text = "Back"

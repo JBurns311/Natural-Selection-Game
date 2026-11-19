@@ -38,10 +38,10 @@ theme_override_font_sizes/font_size = 36
 text = "Natural Selection"
 horizontal_alignment = 1
 
-[node name="StartButton" type="Button" parent="CenterContainer/Menu" unique_id=572779982]
+[node name="ResumeButton" type="Button" parent="CenterContainer/Menu" unique_id=572779982]
 custom_minimum_size = Vector2(260, 48)
 layout_mode = 2
-text = "Start Game"
+text = "Resume Game"
 
 [node name="EnemyStrategyButton" type="Button" parent="CenterContainer/Menu" unique_id=2070601006]
 custom_minimum_size = Vector2(260, 48)
